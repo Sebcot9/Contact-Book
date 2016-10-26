@@ -5,7 +5,7 @@ namespace ContactBundle\Entity;
 use ContactBundle\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
-use FOS\UserBundle\Model\User as BaseUser;
+use FOS\UserBundle\Entity\User as BaseUser;
 /**
  * User
  *
@@ -26,7 +26,6 @@ class User extends BaseUser
     /**
      * @var string
      *
-     * @ORM\Column(name="email", type="string", length=255)
      */
     protected $email;
 

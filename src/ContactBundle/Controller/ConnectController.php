@@ -16,4 +16,11 @@ use FOS\UserBundle\Controller\SecurityController as BSC;
  */
 class ConnectController extends BSC {
     //put your code here
+    protected function renderLogin(array $param) {
+        return $this
+                ->container
+                ->get('templating')
+                ->renderResponse('FOSUserBundle:Profile:show.html.twig', $param);
+
+    }
 }

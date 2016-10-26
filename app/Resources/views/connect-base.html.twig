@@ -1,0 +1,33 @@
+{# Commentaires #}
+{% set route = app.request.get('_route') %}
+<!DOCTYPE html>
+
+
+<meta charset="UTF-8" />
+<title>{% block title %}Contact's Book{% endblock %}</title>
+{% block stylesheets %}
+    {% stylesheets filter='cssrewrite'
+            '@ContactBundle/Resources/public/css/bootstrap.min.css'
+            '@ContactBundle/Resources/public/css/bootstrap-theme.min.css' %}
+    <link rel="stylesheet" href="{{ asset_url }}" type="text/css" />
+    {%endstylesheets %}
+{% endblock %}
+<link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+
+<body>
+    {% block header %}
+        <ul>
+            <li><a href="{{ path('homepage') }}">Home</a></li>
+
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
+                <li>Bonjour, {{ app.user }}</li>
+                {% else %}
+                <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
+                <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>
+                {% endif %}
+        </ul>
+    {% endblock %}
+{% block body %}{% endblock %}
+{% block javascripts %}{% endblock %}
+</body>

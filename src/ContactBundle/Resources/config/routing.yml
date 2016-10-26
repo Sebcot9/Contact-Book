@@ -1,9 +1,9 @@
 contact_homepage:
     path:     /
     defaults: { _controller: ContactBundle:Default:index }
-
+#Connexion
 contact_login:
-    path: /login
+    path: /connexion
     defaults: { _controller: ContactBundle:Connect:login }
 
 contact_login_check:
@@ -13,5 +13,12 @@ contact_login_check:
         _method: POST
         
 contact_logout:
-    path: /logout
-    defaults: { _controller: ContactBundle:Connect:logout }
+    path: /deconnexion
+    defaults: { _controller: FOSUserBundle:Security:logout }
+    
+#Profil utilisateur
+fos_user_profile_show:
+    pattern: /profile
+    defaults: { _controller: FOSUserBundle:Profile:show }
+    requirements:
+        _method: GET

@@ -1,11 +1,12 @@
 # To get started with security, check out the documentation:
 # http://symfony.com/doc/current/book/security.html
 security:
-
+    encoders:
+        ContactBundle\Entity\User: sha512
     # http://symfony.com/doc/current/book/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory:
-            memory: ~
+        fos_userbundle:
+            id: fos_user.user_manager
 
     firewalls:
         # disables authentication for assets and the profiler, adapt it according to your needs
@@ -14,7 +15,28 @@ security:
             security: false
 
         main:
-            anonymous: ~
+            anonymous: true
+            context: primary_auth
+            pattern:            ^/
+            form_login:
+                provider: fos_userbundle
+                csrf_provider: form.csrf_provider
+                login_path: fos_user_security_login
+                use_forward:    false
+                use_referer:    true
+                check_path:     fos_user_security_check
+                failure_path:   null
+                default_target_path: fos_user_profile_show
+            logout: true
+                
+            
+    
+    access_control:  
+        - { path: ^/, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connexion, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/inscription, role: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/profile, role: IS_AUTHENTICATED_FULLY }
+        - { path: ^/deconnexion$, role: IS_AUTHENTICATED_FULLY }
             # activate different ways to authenticate
 
             # http_basic: ~
