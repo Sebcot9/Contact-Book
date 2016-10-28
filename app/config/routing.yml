@@ -6,6 +6,9 @@ app:
     resource: "@AppBundle/Controller/"
     type:     annotation
 
+#fos_user:
+ #   resource: "@FOSUserBundle/Resources/config/routing/all.xml"
+
 fos_user_security:
     resource: "@FOSUserBundle/Resources/config/routing/security.xml"
 
@@ -32,7 +35,7 @@ fos_user_registration_register:
         _method: GET|POST
         
 fos_user_profile_show:
-    pattern: /profile
-    defaults: { _controller: FOSUserBundle:Profile:show }
+    pattern: /profil
+    defaults: { _controller: ContactBundle:Contact:index }
     requirements:
         _method: GET|POST    

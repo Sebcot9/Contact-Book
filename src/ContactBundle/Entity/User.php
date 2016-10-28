@@ -34,7 +34,8 @@ class User extends BaseUser
      * @var Contact
      * 
      * @ORM\OneToMany(targetEntity="Contact", mappedBy="user", cascade={"persist","remove"})
-     */
+     * @ORM\JoinColumn(name="contacts", referencedColumnName="id")
+     *      /
     private $contacts;
     
     public function __construct() {
@@ -87,7 +88,12 @@ class User extends BaseUser
     {
         if($this === $contact->getUser())
         {
-            $this->contacts-remove($contact);
+            $this->contacts->remove($contact);
         }
+    }
+    
+    public function getContacts()
+    {
+        return $this->contacts;
     }
 }

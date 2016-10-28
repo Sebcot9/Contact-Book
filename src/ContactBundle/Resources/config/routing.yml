@@ -15,10 +15,9 @@ contact_login_check:
 contact_logout:
     path: /deconnexion
     defaults: { _controller: FOSUserBundle:Security:logout }
-    
+
+contact_add:
+    path: /ajout
+    defaults: { _controller: ContactBundle:Contact:add }
 #Profil utilisateur
-fos_user_profile_show:
-    pattern: /profile
-    defaults: { _controller: FOSUserBundle:Profile:show }
-    requirements:
-        _method: GET
+#
