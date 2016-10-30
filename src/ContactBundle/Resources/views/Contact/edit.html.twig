@@ -1,8 +1,8 @@
 {# src/ContactBundle/Resources/views/Contact/add.html.twig #}
 {% extends '::connect-base.html.twig' %}
 {% block body %}
-<h3> Ajout de contact </h3>
-        <form class="form-large" action="{{ path('contact_add') }}"
+<h3> Modification du contact </h3>
+        <form class="form-large" action="{{path('contact_mod', {id: contact.id})}}"
           method="POST" {{ form_enctype(form) }} novalidate="novalidate">
 
         <div class="row">
@@ -33,10 +33,10 @@
                     </div>
                 </div>
                 <a href="{{ path('fos_user_profile_show') }}" class="btn btn-md btn-info">
-                    <i class="fa fa-arrow-left"></i> Retour
+                    <span class="glyphicon glyphicon-arrow-left"></span> Retour
                 </a>
                 <button type="submit" class="submit btn btn-md btn-success" style="float:right">
-                    <span class="glyphicon glyphicon-plus"></span> Ajouter
+                    <span class="glyphicon glyphicon-pencil"></span> Modifier
                 </button>
             </div>
         </div>

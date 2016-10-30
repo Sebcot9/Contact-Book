@@ -21,7 +21,7 @@
 
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
                 <li><a href="{{ path('fos_user_security_logout') }}">Déconnexion</a></li>
-                <li>Bonjour, {{ app.user }}</li>
+                <li><a href="{{ path('fos_user_profile_show') }}">Votre profil</a></li>
                 {% else %}
                 <li><a href="{{ path('fos_user_registration_register') }}">Inscription</a></li>
                 <li><a href="{{ path('fos_user_security_login') }}">Connexion</a></li>

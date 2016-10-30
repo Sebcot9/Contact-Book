@@ -1,22 +1,23 @@
 <?php
 
+namespace ContactBundle\Controller;
+
+use ContactBundle\Entity\Contact;
+use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\RedirectResponse;
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
 
-namespace ContactBundle\Controller;
 
 /**
  * Description of ContactController
  *
  * @author seb
  */
-use ContactBundle\Entity\User;
-use ContactBundle\Entity\Contact;
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\HttpFoundation\Request;
 
 class ContactController extends Controller {
 
@@ -42,23 +43,17 @@ class ContactController extends Controller {
     public function addAction(Request $request) {
         $contact = new Contact();
         $user = $this->getUser();
-        $formBuilder = $this->get('form.factory')->createBuilder('form', $contact);
-        $formBuilder
-                ->add('nom', 'text')
-                ->add('prenom', 'text')
-                ->add('email', 'email', array('required' => false))
-                ->add('tel', 'text')
-                ->add('Enregistrer', 'submit')
-        ;
-        $form = $formBuilder->getForm();
+        $form = $this->createForm('contact_form_type', $contact, array('validation_groups'=>array('addContact')));
+        
         $form->handleRequest($request);
+        
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
 
             $contact->setUser($user);
             $em->persist($contact);
             $em->flush();
-            $this->redirect('ContactBundle:Connect:user.html.twig');
+            return $this->redirect($this->generateUrl('fos_user_profile_show'));
         }
         return $this->render('ContactBundle:Contact:add.html.twig', array(
                     'form' => $form->createView(),
@@ -66,4 +61,33 @@ class ContactController extends Controller {
         ));
     }
 
+    public function supprAction(Request $request, Contact $contact) {
+        $em = $this->getDoctrine()->getManager();
+        $em->remove($contact);
+        $em->flush();
+        
+        $this->get('session')->getFlashBag()->add('success', "Le contact a bien été supprimé");
+        
+        return $this->redirect($this->generateUrl('fos_user_profile_show'));
+    }
+    
+    public function modifAction(Request $request, Contact $contact) {
+        $user = $this->getUser();
+        $form = $this->createForm('contact_form_type', $contact, array('validation_groups'=>array('editContact')));
+        $form->handleRequest($request);
+        
+        if ($form->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $contact->setUser($user);
+            $em->persist($contact);
+            $em->flush();
+            return $this->redirect($this->generateUrl('fos_user_profile_show'));
+        }
+        return $this->render('ContactBundle:Contact:edit.html.twig', array(
+                    'form' => $form->createView(),
+                    'user' => $user,
+                    'contact' => $contact,
+        ));
+        
+    }
 }

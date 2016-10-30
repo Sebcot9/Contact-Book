@@ -1,4 +1,6 @@
 services:
-#    contact.example:
-#        class: ContactBundle\Example
-#        arguments: ["@service_id", "plain_value", %parameter%]
+    contact_add.form.type:
+        class: ContactBundle\Form\ContactFormType
+        tags:
+            - { name: form.type, alias: contact_form_type}
+#   arguments: ["@service_id", "plain_value", %parameter%]

@@ -19,5 +19,17 @@ contact_logout:
 contact_add:
     path: /ajout
     defaults: { _controller: ContactBundle:Contact:add }
-#Profil utilisateur
-#
+
+contact_delete:
+    path: /suppr/{id}
+    defaults: { _controller: ContactBundle:Contact:suppr }
+    methods: GET
+    requirements:
+        id: \d+
+        
+contact_mod:
+    path: /{id}/modifier
+    defaults: { _controller: ContactBundle:Contact:modif }
+    methods: [GET, POST]
+    requirements:
+        id: \d+
